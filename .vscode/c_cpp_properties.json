@@ -1,13 +1,17 @@
 {
-  "configurations": [
-    {
-      "name": "STM32F103C8T6-StdPeriph",
-      "compileCommands": [
-        "${workspaceFolder}/firmware/build/Debug/compile_commands.json"
-      ],
-      "cStandard": "c11"
-    }
-  ],
-  "version": 4,
-  "enableConfigurationSquiggles": true
+    "configurations": [
+        {
+            "name": "STM32F103C8T6-StdPeriph",
+            "compileCommands": [
+                "${workspaceFolder}/firmware/build/Debug/compile_commands.json"
+            ],
+            "cStandard": "c11",
+            "includePath": [
+                "${default}",
+                "${workspaceFolder}/firmware/Libraries/STM32F10x_StdPeriph_Lib/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x"
+            ]
+        }
+    ],
+    "version": 4,
+    "enableConfigurationSquiggles": true
 }
