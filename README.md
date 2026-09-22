@@ -29,7 +29,10 @@
 │   │   ├── cmsis-compat.cmake
 │   │   └── STM32F103xx_FLASH.ld
 │   ├── Libraries/
-│   │   └── STM32F10x_StdPeriph_Lib
+│   │   └── STM32F10x_StdPeriph_Lib/
+│   │       ├── Libraries/
+│   │       ├── VENDOR_INFO.md
+│   │       └── VENDOR_MANIFEST.json
 │   ├── cmake/
 │   ├── src/
 │   │   ├── User/
@@ -56,6 +59,13 @@
 
 当前 `Common` 预置 `Com_Time`，统一提供 1ms SysTick 时间基准。
 
+### 标准库管理
+
+`firmware/Libraries/STM32F10x_StdPeriph_Lib` 已作为普通 Git tracked files 固化到模板仓库，不再使用 Git Submodule。新项目通过 **Use this template** 创建或普通 `git clone` 后即可直接构建，不需要额外初始化子模块。
+
+标准库来源与固定上游提交记录在 `VENDOR_INFO.md` / `VENDOR_MANIFEST.json`。业务开发不要修改该目录；CI 会校验 vendor 文件的 blob SHA。
+
+
 ## 为什么不把 2011G 的 ADC 和自动量程一起带进来
 
 2011G 的 `Driver_ADC` 固定了 ADC1、PA0、Channel 0、软件触发和轮询 EOC；`bsp_Range` 又固定了继电器量程引脚。这些都属于具体赛题实现，不是模板基础设施。
@@ -73,9 +83,7 @@
 
 ## 首次使用
 
-```bash
-git submodule update --init --recursive
-```
+标准库已经随模板仓库提供，无需执行任何 submodule 初始化命令。
 
 确认工具链：
 
@@ -147,7 +155,7 @@ Driver Bsp Common
 - Driver 决定“STM32 片内外设怎么工作”。
 - Bsp 决定“当前板子具体接到哪里、怎么驱动外部器件”。
 - Common 只放真正跨题通用能力。
-- 不修改固定版本标准库子模块源码。
+- 不修改固定版本的 vendor 标准库源码。
 
 ## GitHub Template Repository
 

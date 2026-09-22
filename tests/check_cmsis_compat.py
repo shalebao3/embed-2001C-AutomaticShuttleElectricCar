@@ -5,7 +5,6 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import subprocess
 
 
 def require(condition: bool, message: str) -> None:
@@ -33,18 +32,33 @@ def main() -> None:
     compat = build / "cmsis-compat"
     project_source = firmware / "src"
 
-    head = subprocess.check_output(
-        ["git", "-C", str(library), "rev-parse", "HEAD"], text=True
-    ).strip()
+    manifest_path = library / "VENDOR_MANIFEST.json"
+    require(manifest_path.is_file(), "缺少标准库 VENDOR_MANIFEST.json")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     require(
-        head == "afa743577f2784e95be2d5003380fdb84a702519",
-        "标准库提交与模板审核版本不符",
+        manifest.get("upstream_commit")
+        == "afa743577f2784e95be2d5003380fdb84a702519",
+        "标准库上游提交与模板审核版本不符",
     )
-    status = subprocess.check_output(
-        ["git", "-C", str(library), "status", "--porcelain", "--untracked-files=all"],
-        text=True,
+    expected_files = manifest.get("files", {})
+    require(expected_files, "标准库 vendor manifest 没有文件记录")
+
+    actual_files = {
+        str(path.relative_to(library)).replace("\\", "/")
+        for path in (library / "Libraries").rglob("*")
+        if path.is_file()
+    }
+    require(
+        actual_files == set(expected_files),
+        "标准库 vendor 文件集合与 manifest 不一致",
     )
-    require(not status.strip(), "构建修改了标准库子模块：\n" + status)
+    for relative_path, metadata in expected_files.items():
+        vendored_sha = metadata.get("vendored_blob_sha")
+        require(vendored_sha, "manifest 缺少 vendored_blob_sha：" + relative_path)
+        require(
+            git_blob_sha((library / relative_path).read_bytes()) == vendored_sha,
+            "标准库 vendor 文件被修改：" + relative_path,
+        )
 
     header = (core / "core_cm3.h.old").read_bytes()
     require(
@@ -141,7 +155,7 @@ def main() -> None:
         )
 
     print(
-        "PASS: template layout, pinned StdPeriph, CMSIS compatibility, "
+        "PASS: template layout, vendored pinned StdPeriph, CMSIS compatibility, "
         "unique startup units and BIN/HEX/MAP artifacts"
     )
 
@@ -153,7 +167,6 @@ if __name__ == "__main__":
         RuntimeError,
         OSError,
         ValueError,
-        subprocess.CalledProcessError,
     ) as exc:
         raise SystemExit(
             "Template verification failed: " + str(exc)

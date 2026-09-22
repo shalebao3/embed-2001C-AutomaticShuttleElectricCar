@@ -1,0 +1,224 @@
+{
+  "format_version": 2,
+  "upstream_repository": "https://github.com/wajatimur/stm32f10x-stdperiph-lib",
+  "upstream_commit": "afa743577f2784e95be2d5003380fdb84a702519",
+  "upstream_libraries_tree": "7007b1829fbacbfd038b89c86f95c86675d8cd2b",
+  "vendoring_policy": "StdPeriph driver inc/src + minimal STM32F103C8T6 CMSIS/startup; imported as tracked files, not a submodule",
+  "encoding_note": "Text is stored as UTF-8 in this repository. Files whose upstream byte encoding differed record distinct upstream and vendored blob SHAs.",
+  "normalized_utf8_files": [
+    "Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/stm32f10x.h",
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c",
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c",
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.c"
+  ],
+  "files": {
+    "Libraries/CMSIS/CM3/CoreSupport/core_cm3.c": {
+      "upstream_blob_sha": "fcff0d133ca83a837ea4a2076d4fc629e14d75b9",
+      "vendored_blob_sha": "fcff0d133ca83a837ea4a2076d4fc629e14d75b9"
+    },
+    "Libraries/CMSIS/CM3/CoreSupport/core_cm3.h.old": {
+      "upstream_blob_sha": "7ab7b4b43685d3ab2facb53d326c48eeb2bdfda1",
+      "vendored_blob_sha": "7ab7b4b43685d3ab2facb53d326c48eeb2bdfda1"
+    },
+    "Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md.s": {
+      "upstream_blob_sha": "bec263948108fa6e0c54dfc0ccbbcc8a7dd7425e",
+      "vendored_blob_sha": "bec263948108fa6e0c54dfc0ccbbcc8a7dd7425e"
+    },
+    "Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/stm32f10x.h": {
+      "upstream_blob_sha": "8bf7624536c9ba845a6effe031f8054cba5b0e9e",
+      "vendored_blob_sha": "c81be142df0f7ddf6194c19abcfb5c7a10e63dc4"
+    },
+    "Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c": {
+      "upstream_blob_sha": "71efc858c8bdee4d4ccb6fd24ae1b539eca0f102",
+      "vendored_blob_sha": "71efc858c8bdee4d4ccb6fd24ae1b539eca0f102"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/misc.h": {
+      "upstream_blob_sha": "9a6bd07c17cbe6a24cd23b31c99554f58bcfa5dc",
+      "vendored_blob_sha": "9a6bd07c17cbe6a24cd23b31c99554f58bcfa5dc"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_adc.h": {
+      "upstream_blob_sha": "c465d33533153199476215cd24ae1b4437021da0",
+      "vendored_blob_sha": "c465d33533153199476215cd24ae1b4437021da0"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_bkp.h": {
+      "upstream_blob_sha": "275c5e1f12311069919bf5cfa43e6dfaa4f3763a",
+      "vendored_blob_sha": "275c5e1f12311069919bf5cfa43e6dfaa4f3763a"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_can.h": {
+      "upstream_blob_sha": "d185aa21e33c182000aaca331268e594a77cca17",
+      "vendored_blob_sha": "d185aa21e33c182000aaca331268e594a77cca17"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_cec.h": {
+      "upstream_blob_sha": "7ce689611bf7b6a9c21ad5b2dd6f1f86c9e4b549",
+      "vendored_blob_sha": "7ce689611bf7b6a9c21ad5b2dd6f1f86c9e4b549"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_crc.h": {
+      "upstream_blob_sha": "3362fcaa16cdfcd77a5f9c34ba8e3551fe581138",
+      "vendored_blob_sha": "3362fcaa16cdfcd77a5f9c34ba8e3551fe581138"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_dac.h": {
+      "upstream_blob_sha": "174773cdbbe42d169b3fa9273ed037ba5c10a8c2",
+      "vendored_blob_sha": "174773cdbbe42d169b3fa9273ed037ba5c10a8c2"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_dbgmcu.h": {
+      "upstream_blob_sha": "89ceb9a41fe2bd6cf52a95ef4e79e1e3c8b69212",
+      "vendored_blob_sha": "89ceb9a41fe2bd6cf52a95ef4e79e1e3c8b69212"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_dma.h": {
+      "upstream_blob_sha": "14275fe1a577873e2f492f6f21471314c913ed4a",
+      "vendored_blob_sha": "14275fe1a577873e2f492f6f21471314c913ed4a"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_exti.h": {
+      "upstream_blob_sha": "bb9d7f6768e9df80b51ed10d46a250d2dde09b07",
+      "vendored_blob_sha": "bb9d7f6768e9df80b51ed10d46a250d2dde09b07"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_flash.h": {
+      "upstream_blob_sha": "63720dea3446d5e5ef9b078866c79a5e80d99352",
+      "vendored_blob_sha": "63720dea3446d5e5ef9b078866c79a5e80d99352"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_fsmc.h": {
+      "upstream_blob_sha": "6e1769d9fe452dad652e98dd7fcde3779eee7422",
+      "vendored_blob_sha": "6e1769d9fe452dad652e98dd7fcde3779eee7422"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_gpio.h": {
+      "upstream_blob_sha": "dd28da89c0e1e03c843c2dd73a4c5816c280dd72",
+      "vendored_blob_sha": "dd28da89c0e1e03c843c2dd73a4c5816c280dd72"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_i2c.h": {
+      "upstream_blob_sha": "60e4b14f410663fb7ed57a1d0880f7e4a24cdb82",
+      "vendored_blob_sha": "60e4b14f410663fb7ed57a1d0880f7e4a24cdb82"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_iwdg.h": {
+      "upstream_blob_sha": "25b0bb5206b3ed65327c5df08413a895e620b0ea",
+      "vendored_blob_sha": "25b0bb5206b3ed65327c5df08413a895e620b0ea"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_pwr.h": {
+      "upstream_blob_sha": "1c025e2ff039e757531907a57bd1c440f0db1ddf",
+      "vendored_blob_sha": "1c025e2ff039e757531907a57bd1c440f0db1ddf"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_rcc.h": {
+      "upstream_blob_sha": "1149c34777ac24b415bf9cefbf80d11d9f0a7a7a",
+      "vendored_blob_sha": "1149c34777ac24b415bf9cefbf80d11d9f0a7a7a"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_rtc.h": {
+      "upstream_blob_sha": "fd8beb5bc8b7ef6f38f5ca6d9e0a5a43b614338c",
+      "vendored_blob_sha": "fd8beb5bc8b7ef6f38f5ca6d9e0a5a43b614338c"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_sdio.h": {
+      "upstream_blob_sha": "81c058ad4c3d4ddb79cda3fe34d28c1232ed02ed",
+      "vendored_blob_sha": "81c058ad4c3d4ddb79cda3fe34d28c1232ed02ed"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_spi.h": {
+      "upstream_blob_sha": "23cc26d24c826343f84c0448f4773b0d90a9142d",
+      "vendored_blob_sha": "23cc26d24c826343f84c0448f4773b0d90a9142d"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_tim.h": {
+      "upstream_blob_sha": "65bf76aa732a3714157b8b93095b29cac89a4fed",
+      "vendored_blob_sha": "65bf76aa732a3714157b8b93095b29cac89a4fed"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_usart.h": {
+      "upstream_blob_sha": "162fa87ccebd3d9261a5841c982712294c9e4908",
+      "vendored_blob_sha": "162fa87ccebd3d9261a5841c982712294c9e4908"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/inc/stm32f10x_wwdg.h": {
+      "upstream_blob_sha": "bdfa177b057521ff7cc320fb813effc2f5606d19",
+      "vendored_blob_sha": "bdfa177b057521ff7cc320fb813effc2f5606d19"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/misc.c": {
+      "upstream_blob_sha": "c0a5e11333d7043a2cb490975a9301c27ecf524a",
+      "vendored_blob_sha": "c0a5e11333d7043a2cb490975a9301c27ecf524a"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c": {
+      "upstream_blob_sha": "8155dc9b31ad16dd73bf511bbe409306cf99cec6",
+      "vendored_blob_sha": "8155dc9b31ad16dd73bf511bbe409306cf99cec6"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_bkp.c": {
+      "upstream_blob_sha": "997eecc9e2214c29a8903bb01393a40c81ab4446",
+      "vendored_blob_sha": "997eecc9e2214c29a8903bb01393a40c81ab4446"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_can.c": {
+      "upstream_blob_sha": "ec8e0498bba3254de8dd3d1eed3c0e93149074ac",
+      "vendored_blob_sha": "ec8e0498bba3254de8dd3d1eed3c0e93149074ac"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_cec.c": {
+      "upstream_blob_sha": "4dc615f032f6d1b70eebd313b55fca1294b77d9e",
+      "vendored_blob_sha": "4dc615f032f6d1b70eebd313b55fca1294b77d9e"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_crc.c": {
+      "upstream_blob_sha": "65017281205ab8d6bef728b116284d9239d3971f",
+      "vendored_blob_sha": "65017281205ab8d6bef728b116284d9239d3971f"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dac.c": {
+      "upstream_blob_sha": "1cfc71ded26a8189cc531005282693f75cd4e0fd",
+      "vendored_blob_sha": "1cfc71ded26a8189cc531005282693f75cd4e0fd"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dbgmcu.c": {
+      "upstream_blob_sha": "96a8fde37180a74592c6b4d380aececc5708db1e",
+      "vendored_blob_sha": "96a8fde37180a74592c6b4d380aececc5708db1e"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c": {
+      "upstream_blob_sha": "bf072df3afb86dc23515f9f7d73045f8ccdb5454",
+      "vendored_blob_sha": "bf072df3afb86dc23515f9f7d73045f8ccdb5454"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_exti.c": {
+      "upstream_blob_sha": "b6290d5826249264eca1c66185bbcdb8be8bcc48",
+      "vendored_blob_sha": "b6290d5826249264eca1c66185bbcdb8be8bcc48"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c": {
+      "upstream_blob_sha": "cdff9e9b84614df645f1ba683bd3effea83448da",
+      "vendored_blob_sha": "00d850aa10ffef653040c35d7c5510093b642fb7"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c": {
+      "upstream_blob_sha": "51669ee37bb69a0b86a04277cc2f4b713ee3f6d3",
+      "vendored_blob_sha": "51669ee37bb69a0b86a04277cc2f4b713ee3f6d3"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c": {
+      "upstream_blob_sha": "457ff112f748284b7777a2924b40f4f90c4dcc36",
+      "vendored_blob_sha": "457ff112f748284b7777a2924b40f4f90c4dcc36"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c": {
+      "upstream_blob_sha": "4ea321c14cc930a85973a34ce75bc5a05c050387",
+      "vendored_blob_sha": "8e0b41a29623879c6c80c73c99795c95c3080704"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_iwdg.c": {
+      "upstream_blob_sha": "c7cbf7ec5ce4a45558c0f2d87084122b5689e54b",
+      "vendored_blob_sha": "c7cbf7ec5ce4a45558c0f2d87084122b5689e54b"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_pwr.c": {
+      "upstream_blob_sha": "a5a5c572690649aca3fc6b2c50b6085c3267e174",
+      "vendored_blob_sha": "a5a5c572690649aca3fc6b2c50b6085c3267e174"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c": {
+      "upstream_blob_sha": "a29034bdf72b6b69e204c2841f9ce8ba760113bd",
+      "vendored_blob_sha": "a29034bdf72b6b69e204c2841f9ce8ba760113bd"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rtc.c": {
+      "upstream_blob_sha": "f05aef572895334923cfff132d9d453414585f43",
+      "vendored_blob_sha": "f05aef572895334923cfff132d9d453414585f43"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c": {
+      "upstream_blob_sha": "bc1719d76a8345df9adacd2b3cf69cefeb8b3a3a",
+      "vendored_blob_sha": "bc1719d76a8345df9adacd2b3cf69cefeb8b3a3a"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.c": {
+      "upstream_blob_sha": "4ec65b2d9712cea7805ebbc6951e1b96df4bf519",
+      "vendored_blob_sha": "4ec65b2d9712cea7805ebbc6951e1b96df4bf519"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.c": {
+      "upstream_blob_sha": "bfb4dd1da7becbdb4f31948a44dd403e1d9a9d3c",
+      "vendored_blob_sha": "bfb4dd1da7becbdb4f31948a44dd403e1d9a9d3c"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.c": {
+      "upstream_blob_sha": "e794eae66b59adc94d8b13f9e6057292ac8fd966",
+      "vendored_blob_sha": "ee50eba35d2cf8ae963832f27b17e5b12dfd0852"
+    },
+    "Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_wwdg.c": {
+      "upstream_blob_sha": "4a901e4edb57e50bdfb4c52697d054296e68cfeb",
+      "vendored_blob_sha": "4a901e4edb57e50bdfb4c52697d054296e68cfeb"
+    },
+    "Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.h": {
+      "upstream_blob_sha": "54bc1abe722b2a82fe0fd9fb1b7acb937597a2c2",
+      "vendored_blob_sha": "54bc1abe722b2a82fe0fd9fb1b7acb937597a2c2"
+    }
+  }
+}

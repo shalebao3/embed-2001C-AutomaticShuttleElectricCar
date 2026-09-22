@@ -23,8 +23,8 @@ set(STDPERIPH_DRIVER "${STDPERIPH_ROOT}/Libraries/STM32F10x_StdPeriph_Driver")
 
 if(NOT EXISTS "${STDPERIPH_DRIVER}/src/stm32f10x_gpio.c")
     message(FATAL_ERROR
-        "STM32F10x 标准库子模块未初始化。请在仓库根目录执行: "
-        "git submodule update --init --recursive"
+        "STM32F10x 固定 vendor 标准库不完整：缺少 stm32f10x_gpio.c。"
+        "请从模板仓库恢复 firmware/Libraries/STM32F10x_StdPeriph_Lib。"
     )
 endif()
 
