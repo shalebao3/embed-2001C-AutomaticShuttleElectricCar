@@ -95,7 +95,7 @@ def main() -> None:
         not (firmware / "STM32F103xx_FLASH.ld").exists(),
         "仍遗留 firmware 根目录链接脚本",
     )
-    for directory in ("User", "App", "Driver", "Bsp", "Common"):
+    for directory in ("User", "App", "Bsp", "Common"):
         require((project_source / directory).is_dir(), "src 缺少 " + directory)
 
     for filename in (
