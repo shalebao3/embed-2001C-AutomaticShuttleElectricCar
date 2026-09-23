@@ -7,4 +7,6 @@ void Bsp_Encoder_Init(void);
 
 int16_t Bsp_Encoder_GetLeftCount(void);
 
+int16_t Bsp_Encoder_GetRightCount(void);
+
 #endif
