@@ -24,7 +24,7 @@ void Bsp_Motor_Init(void)
     TIM_TimeBaseStructInit(&TIM_TimeBaseStructure);
 
     /* 时基配置：只负责设置最小时基单元 */
-    TIM_TimeBaseStructure.TIM_Prescaler = 0;
+    TIM_TimeBaseStructure.TIM_Prescaler = 0;  // PSC
     TIM_TimeBaseStructure.TIM_Period = MOTOR_PWM_PERIOD;  // ARR
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  // 向上计数模式
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;  // 时钟分频为 1
@@ -87,7 +87,7 @@ void Bsp_Motor_SetRightDuty(uint16_t duty)
     }
 
     compare =
-        ((uint32_t)(MOTOR_PWM_PERIOD + 1U) * duty) / BSP_MOTOR_DUTY_MAX;
+        ((uint32_t)(MOTOR_PWM_PERIOD + 1U) * duty) / BSP_MOTORx_DUTY_MAX;
 
     TIM_SetCompare2(TIM1, compare);
 }

@@ -1,5 +1,6 @@
 #include "main.h"
 #include "Com_Time.h"
+#include "bsp_Motor.h"
 
 /**
  * @brief 通用工程入口。
@@ -13,6 +14,11 @@ int main(void)
     {
         Error_Handler();
     }
+
+    Bsp_Motor_Init();
+
+    Bsp_Motor_SetLeftDuty(500);  /* 50% */
+    Bsp_Motor_SetRightDuty(750); /* 75% */
 
     while (1)
     {
