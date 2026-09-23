@@ -78,7 +78,7 @@ void App_ShuttleCar_Task(void)
 
     current_tick = Bsp_ControlTimer_GetTick();
 
-    /* 中断处理的控制周期检查，PSC = 7199， ARR = 9999，即到达 10ms 控制周期继续执行速度更新逻辑 */
+    /* 中断处理的控制周期检查，PSC = 71， ARR = 9999，即到达 10ms 控制周期继续执行速度更新逻辑 */
     if (current_tick == s_last_control_tick)
     {
         return;
