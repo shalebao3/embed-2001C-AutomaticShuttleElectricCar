@@ -44,6 +44,8 @@ static int32_t s_right_speed_correction = 0;
 #define APP_SPEED_KP 1
 #define APP_SPEED_KI 1
 
+/* 左轮，右轮速度 PI 控制器积分限幅，防止积分项累加过大 */
+#define APP_SPEED_INTEGRAL_LIMIT 500
 /*
  * PI 控制器结构体定义
  */
@@ -55,8 +57,50 @@ typedef struct
     int32_t integral_limit;
 } App_PIController;
 
-/* 左轮，右轮速度 PI 控制器积分限幅，防止积分项累加过大 */
-#define APP_SPEED_INTEGRAL_LIMIT 500
+/*
+* 左轮，右轮速度 PI 控制器初始化
+*/
+static App_PIController s_left_speed_pi =
+    {
+        APP_SPEED_KP,
+        APP_SPEED_KI,
+        0,
+        APP_SPEED_INTEGRAL_LIMIT
+    };
+
+static App_PIController s_right_speed_pi =
+    {
+        APP_SPEED_KP,
+        APP_SPEED_KI,
+        0,
+        APP_SPEED_INTEGRAL_LIMIT
+    };
+
+/*
+* 更新 PI 控制器输出
+*
+* @param controller PI 控制器结构体指针
+* @param error 当前速度误差
+* @return PI 控制器输出修正量
+*/
+static int32_t App_ShuttleCar_PIUpdate(
+    App_PIController *controller,
+    int16_t error)
+{
+    controller->integral += error;
+
+    if (controller->integral > controller->integral_limit)
+    {
+        controller->integral = controller->integral_limit;
+    }
+    else if (controller->integral < -controller->integral_limit)
+    {
+        controller->integral = -controller->integral_limit;
+    }
+
+    return controller->kp * error +
+           controller->ki * controller->integral;
+}
 
 /*
  * 限幅函数：将占空比限制在 0 到 BSP_MOTOR_DUTY_MAX 之间，防止调速超出约定占空比：0 - BSP_MOTOR_DUTY_MAX
@@ -170,13 +214,9 @@ void App_ShuttleCar_Task(void)
 
 
     /* 计算左轮，右轮速度 PI 控制器输出修正量 */
-    s_left_speed_correction =
-        APP_SPEED_KP * s_left_speed_error +
-        APP_SPEED_KI * s_left_speed_integral;
+    s_left_speed_correction = App_ShuttleCar_PIUpdate(&s_left_speed_pi, s_right_speed_error);
 
-    s_right_speed_correction =
-        APP_SPEED_KP * s_right_speed_error +
-        APP_SPEED_KI * s_right_speed_integral;
+    s_right_speed_correction = App_ShuttleCar_PIUpdate(&s_right_speed_pi, s_left_speed_error);
 
     /* 设置左右轮电机占空比 */
 
