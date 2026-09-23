@@ -31,6 +31,12 @@ static int16_t s_right_speed_error = 0;
 
 /* 左轮 PI 控制器积分累计 */
 static int32_t s_left_speed_integral = 0;
+/*
+ * 左轮速度 PI 控制器输出修正量
+/*
+ * 计算公式：s_left_speed_correction = APP_LEFT_SPEED_KP * s_left_speed_error + APP_LEFT_SPEED_KI * s_left_speed_integral
+ */
+static int32_t s_left_speed_correction = 0;
 
 /* 左轮速度 PI 参数，真实值后续结合实车调试 */
 #define APP_LEFT_SPEED_KP 1
@@ -113,7 +119,7 @@ void App_ShuttleCar_Task(void)
         s_right_target_speed -
         s_right_speed;
 
-    /* 左右轮速度差，比如左轮速度 10，右轮速度 20，则差值为 10 */
+    /* 左右轮速度差，比如左轮速度 20，右轮速度 10，则差值为 10 */
     s_speed_error =
         s_left_speed -
         s_right_speed;
@@ -126,7 +132,7 @@ void App_ShuttleCar_Task(void)
     /* 累计左轮速度误差，作为 PI 控制器积分状态 */
     s_left_speed_integral +=
         s_left_speed_error;
-        
+
     /* 积分限幅，防止积分项累加过大 */
     if (s_left_speed_integral > APP_LEFT_SPEED_INTEGRAL_LIMIT)
     {
@@ -136,6 +142,11 @@ void App_ShuttleCar_Task(void)
     {
         s_left_speed_integral = -APP_LEFT_SPEED_INTEGRAL_LIMIT;
     }
+
+    /* 计算左轮速度 PI 控制器输出修正量 */
+    s_left_speed_correction =
+        APP_LEFT_SPEED_KP * s_left_speed_error +
+        APP_LEFT_SPEED_KI * s_left_speed_integral;
 
     /* 设置左右轮电机占空比 */
     left_duty =
@@ -147,7 +158,10 @@ void App_ShuttleCar_Task(void)
         s_correction;
 
     /* 限制占空比在合理范围内 */
-    left_duty = App_ShuttleCar_ClampDuty(left_duty);
+    left_duty =
+        (int32_t)s_base_duty +
+        s_left_speed_correction -
+        s_correction;
     right_duty = App_ShuttleCar_ClampDuty(right_duty);
 
     Bsp_Motor_SetLeftDuty((uint16_t)left_duty);
