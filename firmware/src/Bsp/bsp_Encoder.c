@@ -77,3 +77,4 @@ int16_t Bsp_Encoder_GetRightSpeed(void)
 {
     return r_speed;
 }
+

@@ -52,4 +52,16 @@ void App_ShuttleCar_Task(void)
      */
     s_left_speed = Bsp_Encoder_GetLeftSpeed();
     s_right_speed = Bsp_Encoder_GetRightSpeed();
+
+    /* 计算左右轮速度差 */
+    s_speed_error =
+        s_left_speed -
+        s_right_speed;
+
+    /* P 控制修正量 */
+    s_correction =
+        APP_SPEED_SYNC_KP *
+        s_speed_error;
+
+
 }
