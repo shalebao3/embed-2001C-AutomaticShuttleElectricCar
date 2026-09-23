@@ -50,8 +50,7 @@ int16_t Bsp_Encoder_GetLeftCount(void)
      */
 
 
-    delta = (int16_t)(TIM_GetCounter(TIM2) - ENCODER_COUNTER_MID);
-    return delta;
+    return l_delta;
 }
 
 int16_t Bsp_Encoder_GetRightCount(void)
