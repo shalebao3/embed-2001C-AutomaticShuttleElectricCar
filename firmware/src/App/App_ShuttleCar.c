@@ -51,7 +51,7 @@ static int32_t s_right_speed_correction = 0;
  */
 typedef struct
 {
-    int32_t kp;
+    int32_t kp;  
     int32_t ki;
     int32_t integral;
     int32_t integral_limit;
@@ -186,12 +186,12 @@ void App_ShuttleCar_Task(void)
         APP_SPEED_SYNC_KP *
         s_speed_error;
 
-    /* 累计左轮，右轮速度误差，作为 PI 控制器积分状态 */
+    /* 累计一次左轮，右轮速度误差，作为 PI 控制器积分状态 */
 
     /* 积分限幅，防止积分项累加过大 */
 
     /* 计算左轮，右轮速度 PI 控制器输出修正量 */
-    
+
     s_left_speed_correction = App_ShuttleCar_PIUpdate(&s_left_speed_pi, s_right_speed_error);
 
     s_right_speed_correction = App_ShuttleCar_PIUpdate(&s_right_speed_pi, s_left_speed_error);
