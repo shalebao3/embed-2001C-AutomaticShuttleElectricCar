@@ -27,12 +27,17 @@ static int16_t s_right_speed = 0;
 static int16_t s_left_speed_error = 0;
 static int16_t s_right_speed_error = 0;
 
+#define APP_SPEED_SYNC_KP 1
+
 /* 左轮 PI 控制器积分累计 */
 static int32_t s_left_speed_integral = 0;
 
 /* 左轮速度 PI 参数，真实值后续结合实车调试 */
 #define APP_LEFT_SPEED_KP 1
 #define APP_LEFT_SPEED_KI 1
+
+/* 左轮速度 PI 控制器积分限幅，防止积分项累加过大 */
+#define APP_LEFT_SPEED_INTEGRAL_LIMIT 500
 
 /*
  * 限幅函数：将占空比限制在 0 到 BSP_MOTOR_DUTY_MAX 之间，防止调速超出约定占空比：0 - BSP_MOTOR_DUTY_MAX
@@ -95,10 +100,11 @@ void App_ShuttleCar_Task(void)
      * 到这里就代表：
      * 新的一个 10ms 控制周期到了。
      */
+    /* 获取当前左右轮的实际速度 */
     s_left_speed = Bsp_Encoder_GetLeftSpeed();
     s_right_speed = Bsp_Encoder_GetRightSpeed();
 
-    /* 左右轮速度差 */
+    /* 左右轮与目标速度的误差 */
     s_left_speed_error =
         s_left_target_speed -
         s_left_speed;
@@ -107,19 +113,29 @@ void App_ShuttleCar_Task(void)
         s_right_target_speed -
         s_right_speed;
 
-    /* 左右轮速度差 */
+    /* 左右轮速度差，比如左轮速度 10，右轮速度 20，则差值为 10 */
     s_speed_error =
         s_left_speed -
         s_right_speed;
 
     /* P 控制修正量 */
     s_correction =
-        APP_LEFT_SPEED_KP *
+        APP_SPEED_SYNC_KP *
         s_speed_error;
 
-    /* I 控制修正量 */
+    /* 累计左轮速度误差，作为 PI 控制器积分状态 */
     s_left_speed_integral +=
         s_left_speed_error;
+        
+    /* 积分限幅，防止积分项累加过大 */
+    if (s_left_speed_integral > APP_LEFT_SPEED_INTEGRAL_LIMIT)
+    {
+        s_left_speed_integral = APP_LEFT_SPEED_INTEGRAL_LIMIT;
+    }
+    else if (s_left_speed_integral < -APP_LEFT_SPEED_INTEGRAL_LIMIT)
+    {
+        s_left_speed_integral = -APP_LEFT_SPEED_INTEGRAL_LIMIT;
+    }
 
     /* 设置左右轮电机占空比 */
     left_duty =
