@@ -27,11 +27,6 @@ static int16_t s_right_speed = 0;
 static int16_t s_left_speed_error = 0;
 static int16_t s_right_speed_error = 0;
 
-#define APP_SPEED_SYNC_KP 1
-
-/* 左轮，右轮 PI 控制器积分累计 */
-static int32_t s_left_speed_integral = 0;
-static int32_t s_right_speed_integral = 0;
 /*
  * 左轮， 右轮速度 PI 控制器输出修正量
  *
@@ -39,6 +34,11 @@ static int32_t s_right_speed_integral = 0;
  */
 static int32_t s_left_speed_correction = 0;
 static int32_t s_right_speed_correction = 0;
+
+/*
+ * 左右轮速度同步控制比例系数
+ */
+#define APP_SPEED_SYNC_KP 1
 
 /* 左轮速度 PI 参数，真实值后续结合实车调试 */
 #define APP_SPEED_KP 1
