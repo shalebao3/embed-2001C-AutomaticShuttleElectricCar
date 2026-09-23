@@ -9,7 +9,7 @@ void Bsp_Motor_Init(void)
     TIM_OCInitTypeDef TIM_OCInitStructure;
 
     /* 1. 开启 GPIOA 和 TIM1 时钟 */
-    RCC_APB1PeriphClockCmd(
+    RCC_APB2PeriphClockCmd(
         RCC_APB2Periph_GPIOA | RCC_APB2Periph_TIM1,
         ENABLE);
 
