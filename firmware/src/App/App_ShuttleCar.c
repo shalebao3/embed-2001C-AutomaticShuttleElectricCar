@@ -149,19 +149,17 @@ void App_ShuttleCar_Task(void)
         APP_LEFT_SPEED_KI * s_left_speed_integral;
 
     /* 设置左右轮电机占空比 */
-    left_duty =
-        (int32_t)s_base_duty -
-        s_correction;
-
-    right_duty =
-        (int32_t)s_base_duty +
-        s_correction;
 
     /* 限制占空比在合理范围内 */
     left_duty =
         (int32_t)s_base_duty +
         s_left_speed_correction -
         s_correction;
+
+    /* 限制左轮占空比在合理范围内 */ 
+    left_duty = App_ShuttleCar_ClampDuty(left_duty);
+
+    /* 限制右轮占空比在合理范围内 */
     right_duty = App_ShuttleCar_ClampDuty(right_duty);
 
     Bsp_Motor_SetLeftDuty((uint16_t)left_duty);
