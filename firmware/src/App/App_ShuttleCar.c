@@ -12,6 +12,8 @@ static int16_t s_speed_error = 0;
 
 static int32_t s_correction = 0;
 
+static uint32_t s_last_control_tick = 0U;
+
 #define APP_SPEED_SYNC_KP 1
 
 ErrorStatus App_ShuttleCar_Init(void)
@@ -33,13 +35,21 @@ ErrorStatus App_ShuttleCar_Init(void)
 
 void App_ShuttleCar_Task(void)
 {
+    uint32_t current_tick;
+
+    current_tick = Bsp_ControlTimer_GetTick();
+
+    if (current_tick == s_last_control_tick)
+    {
+        return;
+    }
+
+    s_last_control_tick = current_tick;
+
     /*
-     * 当前阶段先保持非阻塞空任务。
-     * 后续在这里编排：
-     * 1. 黑线/位置事件；
-     * 2. 自动往返状态机；
-     * 3. 目标速度和电机控制。
-     *
-     * 10ms 编码器测速由 TIM4 中断负责更新，不在这里依赖主循环频率。
+     * 到这里就代表：
+     * 新的一个 10ms 控制周期到了。
      */
+    s_left_speed = Bsp_Encoder_GetLeftSpeed();
+    s_right_speed = Bsp_Encoder_GetRightSpeed();
 }
