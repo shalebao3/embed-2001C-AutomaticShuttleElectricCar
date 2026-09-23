@@ -5,7 +5,7 @@
 static volatile uint16_t l_current = 0;
 static volatile uint16_t l_last = 0;
 static volatile int16_t l_delta = 0;
-static volatile int16_t l_direction;
+static volatile uint16_t l_direction;
 static volatile int16_t l_speed = 0;
 
 
@@ -42,27 +42,10 @@ void Bsp_Encoder_Init(void)
 }
 
 
-int16_t Bsp_Encoder_GetLeftCount(void)
+int16_t Bsp_Encoder_GetLeftSpeed(void)
 {
-    /*
-     * TIM2 从 0x8000 开始计数：
-     * 正方向使 CNT 增大，反方向使 CNT 减小。
-     * 返回相对初始化位置的有符号计数，便于直接观察正负方向。
-     */
-
-
+    l_current = TIM_GetCounter(TIM2);
+    l_delta = l_current - l_last;
+    l_last = l_current;
     return l_delta;
-}
-
-int16_t Bsp_Encoder_GetRightCount(void)
-{
-    // 返回右编码器的计数值
-    return 0;
-}
-
-uint16_t GetLeftDelta(void)
-{
-    l_delta = (int16_t)(TIM_GetCounter(TIM2) - l_last);
-    l_last = TIM_GetCounter(TIM2);
-    return (uint16_t)l_delta;
 }
