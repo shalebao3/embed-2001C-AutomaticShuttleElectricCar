@@ -192,9 +192,9 @@ void App_ShuttleCar_Task(void)
 
     /* 计算左轮，右轮速度 PI 控制器输出修正量 */
 
-    s_left_speed_correction = App_ShuttleCar_PIUpdate(&s_left_speed_pi, s_right_speed_error);
+    s_left_speed_correction = App_ShuttleCar_PIUpdate(&s_left_speed_pi, s_left_speed_error);
 
-    s_right_speed_correction = App_ShuttleCar_PIUpdate(&s_right_speed_pi, s_left_speed_error);
+    s_right_speed_correction = App_ShuttleCar_PIUpdate(&s_right_speed_pi, s_right_speed_error);
 
     /* 设置左右轮电机占空比 */
 
