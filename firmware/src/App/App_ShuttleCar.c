@@ -39,6 +39,10 @@ void App_ShuttleCar_Task(void)
 
     current_tick = Bsp_ControlTimer_GetTick();
 
+    int32_t left_duty;
+
+    int32_t right_duty;
+
     if (current_tick == s_last_control_tick)
     {
         return;
@@ -63,5 +67,26 @@ void App_ShuttleCar_Task(void)
         APP_SPEED_SYNC_KP *
         s_speed_error;
 
+    /* 计算左右轮电机占空比 */
+    left_duty = s_base_duty + s_correction;
+    right_duty = s_base_duty - s_correction;
 
+    /* 限制占空比在合理范围内 */
+    if (left_duty > 1000)
+    {
+        left_duty = 1000;
+    }
+    else if (left_duty < 0)
+    {
+        left_duty = 0;
+    }
+
+    if (right_duty > 1000)
+    {
+        right_duty = 1000;
+    }
+    else if (right_duty < 0)
+    {
+        right_duty = 0;
+    }
 }
