@@ -87,19 +87,42 @@ static int32_t App_ShuttleCar_PIUpdate(
     App_PIController *controller,
     int16_t error)
 {
+    /* 累计一次速度误差，作为 PI 控制器积分状态 */
     controller->integral += error;
 
+    /* 积分限幅，防止积分项累加过大 */
     if (controller->integral > controller->integral_limit)
     {
         controller->integral = controller->integral_limit;
     }
+    /* 反向积分限幅，防止积分项累加负值 */
     else if (controller->integral < -controller->integral_limit)
     {
         controller->integral = -controller->integral_limit;
     }
 
+    /* 计算 PI 控制器输出 */
     return controller->kp * error +
            controller->ki * controller->integral;
+}
+
+/*
+ * 重置 PI 控制器积分项
+ *
+ * @param controller PI 控制器结构体指针
+ */
+static void App_ShuttleCar_ResetSpeedControllers(void)
+{
+    /* 清空左右轮 PI 的历史积分 */
+    s_left_speed_pi.integral = 0;
+    s_right_speed_pi.integral = 0;
+
+    /* 清空本轮控制输出 */
+    s_left_speed_correction = 0;
+    s_right_speed_correction = 0;
+
+    /* 清空左右轮同步修正 */
+    s_correction = 0;
 }
 
 /*
@@ -130,11 +153,17 @@ ErrorStatus App_ShuttleCar_Init(void)
      * 这样 TIM4 开始产生中断时，编码器状态已经准备完成。
      */
     Bsp_Motor_Init();
+
+    /* 初始化左右轮电机占空比为 0 */
     Bsp_Motor_SetLeftDuty(0U);
     Bsp_Motor_SetRightDuty(0U);
 
     Bsp_Encoder_Init();
 
+    /* 重置左右轮速度 PI 控制器 */
+    App_ShuttleCar_ResetSpeedControllers();
+
+    /* 初始化控制定时器 Tim4 */
     Bsp_ControlTimer_Init();
 
     return SUCCESS;
@@ -185,10 +214,6 @@ void App_ShuttleCar_Task(void)
     s_correction =
         APP_SPEED_SYNC_KP *
         s_speed_error;
-
-    /* 累计一次左轮，右轮速度误差，作为 PI 控制器积分状态 */
-
-    /* 积分限幅，防止积分项累加过大 */
 
     /* 计算左轮，右轮速度 PI 控制器输出修正量 */
 
