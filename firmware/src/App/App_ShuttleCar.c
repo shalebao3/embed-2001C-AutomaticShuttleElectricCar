@@ -34,7 +34,7 @@ static int32_t s_left_speed_integral = 0;
 static int32_t s_right_speed_integral = 0;
 /*
  * 左轮， 右轮速度 PI 控制器输出修正量
-/*
+ *
  * 计算公式：s_x_speed_correction = APP_x_SPEED_KP * s_x_speed_error + APP_x_SPEED_KI * s_x_speed_integral
  */
 static int32_t s_left_speed_correction = 0;
