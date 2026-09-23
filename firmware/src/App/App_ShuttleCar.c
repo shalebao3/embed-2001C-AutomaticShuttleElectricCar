@@ -16,6 +16,27 @@ static uint32_t s_last_control_tick = 0U;
 
 #define APP_SPEED_SYNC_KP 1
 
+/*
+ * 限幅函数：将占空比限制在 0 到 BSP_MOTOR_DUTY_MAX 之间，防止调速超出约定占空比：0 - BSP_MOTOR_DUTY_MAX
+ * 
+ * @param duty 待限制的占空比
+ * @return 限制后的占空比
+*/
+static uint16_t App_ShuttleCar_ClampDuty(int32_t duty)
+{
+    if (duty < 0)
+    {
+        return 0U;
+    }
+
+    if (duty > BSP_MOTOR_DUTY_MAX)
+    {
+        return BSP_MOTOR_DUTY_MAX;
+    }
+
+    return (uint16_t)duty;
+}
+
 ErrorStatus App_ShuttleCar_Init(void)
 {
     /*
@@ -77,23 +98,8 @@ void App_ShuttleCar_Task(void)
         s_correction;
 
     /* 限制占空比在合理范围内 */
-    if (left_duty > 1000)
-    {
-        left_duty = 1000;
-    }
-    else if (left_duty < 0)
-    {
-        left_duty = 0;
-    }
-
-    if (right_duty > 1000)
-    {
-        right_duty = 1000;
-    }
-    else if (right_duty < 0)
-    {
-        right_duty = 0;
-    }
+    left_duty = App_ShuttleCar_ClampDuty(left_duty);
+    right_duty = App_ShuttleCar_ClampDuty(right_duty);
 
     Bsp_Motor_SetLeftDuty((uint16_t)left_duty);
     Bsp_Motor_SetRightDuty((uint16_t)right_duty);
