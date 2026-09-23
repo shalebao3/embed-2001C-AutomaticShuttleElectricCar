@@ -1,5 +1,7 @@
 #include "bsp_ControlTimer.h"
 
+static volatile uint32_t s_control_tick = 0U;
+
 void Bsp_ControlTimer_Init(void)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
@@ -47,4 +49,14 @@ void Bsp_ControlTimer_Init(void)
 
     /* 启动 TIM4 */
     TIM_Cmd(TIM4, ENABLE);
+}
+
+void Bsp_ControlTimer_Tick(void)
+{
+    s_control_tick++;
+}
+
+uint32_t Bsp_ControlTimer_GetTick(void)
+{
+    return s_control_tick;
 }

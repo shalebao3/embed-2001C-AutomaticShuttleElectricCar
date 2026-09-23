@@ -3,6 +3,17 @@
 #include "bsp_Encoder.h"
 #include "bsp_Motor.h"
 
+static uint16_t s_base_duty = 500U;
+
+static int16_t s_left_speed = 0;
+static int16_t s_right_speed = 0;
+
+static int16_t s_speed_error = 0;
+
+static int32_t s_correction = 0;
+
+#define APP_SPEED_SYNC_KP 1
+
 ErrorStatus App_ShuttleCar_Init(void)
 {
     /*

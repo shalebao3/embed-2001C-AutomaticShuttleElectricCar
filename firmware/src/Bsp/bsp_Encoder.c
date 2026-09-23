@@ -2,18 +2,13 @@
 
 #define ENCODER_COUNTER_MID 0x8000U
 
-static volatile uint16_t l_current = 0;
-static volatile uint16_t l_last = 0;
-static volatile int16_t l_delta = 0;
-static volatile uint16_t l_direction;
+static uint16_t l_current = 0;
+static uint16_t l_last = 0;
 static volatile int16_t l_speed = 0;
 
-static volatile uint16_t r_current = 0;
-static volatile uint16_t r_last = 0;
-static volatile int16_t r_delta = 0;
-static volatile uint16_t r_direction;
+static uint16_t r_current = 0;
+static uint16_t r_last = 0;
 static volatile int16_t r_speed = 0;
-
 
 void Bsp_Encoder_Init(void)
 {
@@ -50,6 +45,8 @@ void Bsp_Encoder_Init(void)
 
     l_last = ENCODER_COUNTER_MID;
     r_last = ENCODER_COUNTER_MID;
+
+    /* 启动定时器 */
     TIM_Cmd(TIM2, ENABLE);
     TIM_Cmd(TIM3, ENABLE);
 }
