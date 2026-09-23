@@ -2,6 +2,13 @@
 
 #define ENCODER_COUNTER_MID 0x8000U
 
+static volatile uint16_t l_current = 0;
+static volatile uint16_t l_last = 0;
+static volatile int16_t l_delta = 0;
+static volatile int16_t l_direction;
+static volatile int16_t l_speed = 0;
+
+
 void Bsp_Encoder_Init(void)
 {
     // 初始化编码器
@@ -41,7 +48,10 @@ int16_t Bsp_Encoder_GetLeftCount(void)
      * 正方向使 CNT 增大，反方向使 CNT 减小。
      * 返回相对初始化位置的有符号计数，便于直接观察正负方向。
      */
-    return (int16_t)(TIM_GetCounter(TIM2) - ENCODER_COUNTER_MID);
+
+
+    delta = (int16_t)(TIM_GetCounter(TIM2) - ENCODER_COUNTER_MID);
+    return delta;
 }
 
 int16_t Bsp_Encoder_GetRightCount(void)
