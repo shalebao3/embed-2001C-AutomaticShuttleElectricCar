@@ -1,11 +1,9 @@
 #include "main.h"
+#include "App_ShuttleCar.h"
 #include "Com_Time.h"
-#include "bsp_Motor.h"
-#include "bsp_Encoder.h"
 
 /**
- * @brief 通用工程入口。
- * @note 新题目通常在这里依次加入 App_xxx_Init()，并在 while(1) 中调用 App_xxx_Task()。
+ * @brief 程序入口：建立系统时间基准，初始化并持续运行自动往返小车应用。
  */
 int main(void)
 {
@@ -16,19 +14,14 @@ int main(void)
         Error_Handler();
     }
 
-    Bsp_Motor_Init();
-    Bsp_Encoder_Init();
-
-    Bsp_Motor_SetLeftDuty(500);  /* 50% */
-    Bsp_Motor_SetRightDuty(750); /* 75% */
+    if (App_ShuttleCar_Init() != SUCCESS)
+    {
+        Error_Handler();
+    }
 
     while (1)
     {
-        /*
-         * 模板默认不绑定任何题目业务。
-         * 示例：
-         * App_xxx_Task();
-         */
+        App_ShuttleCar_Task();
     }
 }
 
