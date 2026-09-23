@@ -3,17 +3,31 @@
 #include "bsp_Encoder.h"
 #include "bsp_Motor.h"
 
+/* 基础占空比 */
 static uint16_t s_base_duty = 500U;
 
+/* 速度修正量 */
+static int32_t s_correction = 0;
+
+/* 当前左右轮的速度差 */
+static int16_t s_speed_error = 0;
+
+/* 上一次控制周期时间戳 */
+static uint32_t s_last_control_tick = 0U;
+
+/* 当前左右轮的目標速度 */
+static int16_t s_left_target_speed = 50;
+static int16_t s_right_target_speed = 50;
+
+/* 当前左右轮的实际速度 */
 static int16_t s_left_speed = 0;
 static int16_t s_right_speed = 0;
 
-static int16_t s_speed_error = 0;
+/* 当前左右轮的速度误差 */
+static int16_t s_left_speed_error = 0;
+static int16_t s_right_speed_error = 0;
 
-static int32_t s_correction = 0;
-
-static uint32_t s_last_control_tick = 0U;
-
+/* K： PID 比例系数 */
 #define APP_SPEED_SYNC_KP 1
 
 /*
@@ -58,12 +72,13 @@ void App_ShuttleCar_Task(void)
 {
     uint32_t current_tick;
 
-    current_tick = Bsp_ControlTimer_GetTick();
-
     int32_t left_duty;
 
     int32_t right_duty;
 
+    current_tick = Bsp_ControlTimer_GetTick();
+
+    /* 中断处理的控制周期检查，PSC = 7199， ARR = 9999，即到达 10ms 控制周期继续执行速度更新逻辑 */
     if (current_tick == s_last_control_tick)
     {
         return;
@@ -78,7 +93,16 @@ void App_ShuttleCar_Task(void)
     s_left_speed = Bsp_Encoder_GetLeftSpeed();
     s_right_speed = Bsp_Encoder_GetRightSpeed();
 
-    /* 计算左右轮速度差 */
+    /* 左右轮速度差 */
+    s_left_speed_error =
+        s_left_target_speed -
+        s_left_speed;
+
+    s_right_speed_error =
+        s_right_target_speed -
+        s_right_speed;
+
+    /* 左右轮速度差 */
     s_speed_error =
         s_left_speed -
         s_right_speed;
@@ -88,7 +112,7 @@ void App_ShuttleCar_Task(void)
         APP_SPEED_SYNC_KP *
         s_speed_error;
 
-    /* 计算左右轮电机占空比 */
+    /* 设置左右轮电机占空比 */
     left_duty =
         (int32_t)s_base_duty -
         s_correction;
