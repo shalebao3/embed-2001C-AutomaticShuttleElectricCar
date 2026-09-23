@@ -5,6 +5,8 @@
 
 void Bsp_Encoder_Init(void);
 
-int16_t Bsp_Encoder_GetLeftSpeed(void)
+void Bsp_Encoder_UpdateSpeed(void);
+
+int16_t Bsp_Encoder_GetLeftSpeed(void);
 
 #endif

@@ -18,7 +18,6 @@ void Bsp_Encoder_Init(void)
     // GPIOA 挂在 APB2，TIM2 挂在 APB1，因此分别开启时钟
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-    
 
     // 配置 GPIO 引脚
     GPIO_StructInit(&GPIO_InitStructure);
@@ -41,11 +40,16 @@ void Bsp_Encoder_Init(void)
     TIM_Cmd(TIM2, ENABLE);
 }
 
+void Bsp_Encoder_UpdateSpeed(void)
+{
+    l_current = TIM_GetCounter(TIM2);
+
+    l_speed = (int16_t)(l_current - l_last);
+
+    l_last = l_current;
+}
 
 int16_t Bsp_Encoder_GetLeftSpeed(void)
 {
-    l_current = TIM_GetCounter(TIM2);
-    l_delta = l_current - l_last;
-    l_last = l_current;
-    return l_delta;
+    return l_speed;
 }
