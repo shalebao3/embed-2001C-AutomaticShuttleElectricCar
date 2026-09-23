@@ -107,9 +107,7 @@ static int32_t App_ShuttleCar_PIUpdate(
 }
 
 /*
- * 重置 PI 控制器积分项
- *
- * @param controller PI 控制器结构体指针
+ * 重置左右轮速度 PI 控制器的积分项和本轮控制输出
  */
 static void App_ShuttleCar_ResetSpeedControllers(void)
 {
