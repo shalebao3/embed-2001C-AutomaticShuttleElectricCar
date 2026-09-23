@@ -1,4 +1,4 @@
-#include "bsp_Endoder.h"
+#include "bsp_Encoder.h"
 
 void Bsp_Encoder_Init(void)
 {
