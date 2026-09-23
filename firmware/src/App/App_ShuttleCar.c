@@ -27,8 +27,12 @@ static int16_t s_right_speed = 0;
 static int16_t s_left_speed_error = 0;
 static int16_t s_right_speed_error = 0;
 
-/* K： PID 比例系数 */
-#define APP_SPEED_SYNC_KP 1
+/* 左轮 PI 控制器积分累计 */
+static int32_t s_left_speed_integral = 0;
+
+/* 左轮速度 PI 参数，真实值后续结合实车调试 */
+#define APP_LEFT_SPEED_KP 1
+#define APP_LEFT_SPEED_KI 1
 
 /*
  * 限幅函数：将占空比限制在 0 到 BSP_MOTOR_DUTY_MAX 之间，防止调速超出约定占空比：0 - BSP_MOTOR_DUTY_MAX
@@ -109,8 +113,12 @@ void App_ShuttleCar_Task(void)
 
     /* P 控制修正量 */
     s_correction =
-        APP_SPEED_SYNC_KP *
+        APP_LEFT_SPEED_KP *
         s_speed_error;
+
+    /* I 控制修正量 */
+    s_left_speed_integral +=
+        s_left_speed_error;
 
     /* 设置左右轮电机占空比 */
     left_duty =
