@@ -44,6 +44,17 @@ static int32_t s_right_speed_correction = 0;
 #define APP_SPEED_KP 1
 #define APP_SPEED_KI 1
 
+/*
+ * PI 控制器结构体定义
+ */
+typedef struct
+{
+    int32_t kp;
+    int32_t ki;
+    int32_t integral;
+    int32_t integral_limit;
+} App_PIController;
+
 /* 左轮，右轮速度 PI 控制器积分限幅，防止积分项累加过大 */
 #define APP_SPEED_INTEGRAL_LIMIT 500
 
