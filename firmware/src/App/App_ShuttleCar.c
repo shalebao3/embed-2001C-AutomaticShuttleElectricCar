@@ -187,33 +187,11 @@ void App_ShuttleCar_Task(void)
         s_speed_error;
 
     /* 累计左轮，右轮速度误差，作为 PI 控制器积分状态 */
-    s_left_speed_integral +=
-        s_left_speed_error;
-
-    s_right_speed_integral +=
-        s_right_speed_error;
 
     /* 积分限幅，防止积分项累加过大 */
-    if (s_left_speed_integral > APP_SPEED_INTEGRAL_LIMIT)
-    {
-        s_left_speed_integral = APP_SPEED_INTEGRAL_LIMIT;
-    }
-    else if (s_left_speed_integral < -APP_SPEED_INTEGRAL_LIMIT)
-    {
-        s_left_speed_integral = -APP_SPEED_INTEGRAL_LIMIT;
-    }
-
-    if (s_right_speed_integral > APP_SPEED_INTEGRAL_LIMIT)
-    {
-        s_right_speed_integral = APP_SPEED_INTEGRAL_LIMIT;
-    }
-    else if (s_right_speed_integral < -APP_SPEED_INTEGRAL_LIMIT)
-    {
-        s_right_speed_integral = -APP_SPEED_INTEGRAL_LIMIT;
-    }
-
 
     /* 计算左轮，右轮速度 PI 控制器输出修正量 */
+    
     s_left_speed_correction = App_ShuttleCar_PIUpdate(&s_left_speed_pi, s_right_speed_error);
 
     s_right_speed_correction = App_ShuttleCar_PIUpdate(&s_right_speed_pi, s_left_speed_error);
