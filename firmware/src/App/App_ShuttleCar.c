@@ -94,4 +94,7 @@ void App_ShuttleCar_Task(void)
     {
         right_duty = 0;
     }
+
+    Bsp_Motor_SetLeftDuty((uint16_t)left_duty);
+    Bsp_Motor_SetRightDuty((uint16_t)right_duty);
 }
