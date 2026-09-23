@@ -8,6 +8,7 @@
 
 void Bsp_Motor_Init(void);
 
+/* 速度*/
 void Bsp_Motor_SetLeftDuty(uint16_t duty);
 void Bsp_Motor_SetRightDuty(uint16_t duty);
 

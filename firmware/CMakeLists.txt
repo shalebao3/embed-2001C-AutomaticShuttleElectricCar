@@ -69,6 +69,7 @@ target_compile_options(stm32_stdperiph PRIVATE
 add_executable(${CMAKE_PROJECT_NAME}
     ${PROJECT_SOURCES}
     ${STM32_STARTUP_SOURCES}
+    src/Bsp/bsp_Endoder.h
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
