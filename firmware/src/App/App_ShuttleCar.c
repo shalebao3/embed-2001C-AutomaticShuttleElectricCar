@@ -68,8 +68,13 @@ void App_ShuttleCar_Task(void)
         s_speed_error;
 
     /* 计算左右轮电机占空比 */
-    left_duty = s_base_duty + s_correction;
-    right_duty = s_base_duty - s_correction;
+    left_duty =
+        (int32_t)s_base_duty -
+        s_correction;
+
+    right_duty =
+        (int32_t)s_base_duty +
+        s_correction;
 
     /* 限制占空比在合理范围内 */
     if (left_duty > 1000)
