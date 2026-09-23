@@ -1,6 +1,7 @@
 #include "main.h"
 #include "Com_Time.h"
 #include "bsp_Motor.h"
+#include "bsp_Encoder.h"
 
 /**
  * @brief 通用工程入口。
@@ -16,6 +17,7 @@ int main(void)
     }
 
     Bsp_Motor_Init();
+    Bsp_Encoder_Init();
 
     Bsp_Motor_SetLeftDuty(500);  /* 50% */
     Bsp_Motor_SetRightDuty(750); /* 75% */
