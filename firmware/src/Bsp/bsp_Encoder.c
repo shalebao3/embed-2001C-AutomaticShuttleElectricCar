@@ -37,9 +37,10 @@ void Bsp_Encoder_Init(void)
     /* CH1 + CH2 组成正交编码器接口 */
     TIM_EncoderInterfaceConfig(TIM2, TIM_EncoderMode_TI12, TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);
     TIM_SetCounter(TIM2, ENCODER_COUNTER_MID);
+    l_last = ENCODER_COUNTER_MID;
     TIM_Cmd(TIM2, ENABLE);
-    
 }
+
 
 int16_t Bsp_Encoder_GetLeftCount(void)
 {
@@ -57,4 +58,11 @@ int16_t Bsp_Encoder_GetRightCount(void)
 {
     // 返回右编码器的计数值
     return 0;
+}
+
+uint16_t GetLeftDelta(void)
+{
+    l_delta = (int16_t)(TIM_GetCounter(TIM2) - l_last);
+    l_last = TIM_GetCounter(TIM2);
+    return (uint16_t)l_delta;
 }
