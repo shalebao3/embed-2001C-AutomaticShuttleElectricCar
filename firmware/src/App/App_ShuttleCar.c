@@ -83,6 +83,7 @@ void App_ShuttleCar_Task(void)
     current_tick = Bsp_ControlTimer_GetTick();
 
     /* TIM4 每 10ms 更新一次控制周期，PSC = 71，ARR = 9999 */
+    /* 中断执行在 User/stm32f10x_it.c/TIM4_IRQHandler */
     if (current_tick == s_last_control_tick)
     {
         return;
