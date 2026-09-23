@@ -29,21 +29,23 @@ static int16_t s_right_speed_error = 0;
 
 #define APP_SPEED_SYNC_KP 1
 
-/* 左轮 PI 控制器积分累计 */
+/* 左轮，右轮 PI 控制器积分累计 */
 static int32_t s_left_speed_integral = 0;
+static int32_t s_right_speed_integral = 0;
 /*
- * 左轮速度 PI 控制器输出修正量
+ * 左轮， 右轮速度 PI 控制器输出修正量
 /*
- * 计算公式：s_left_speed_correction = APP_LEFT_SPEED_KP * s_left_speed_error + APP_LEFT_SPEED_KI * s_left_speed_integral
+ * 计算公式：s_x_speed_correction = APP_x_SPEED_KP * s_x_speed_error + APP_x_SPEED_KI * s_x_speed_integral
  */
 static int32_t s_left_speed_correction = 0;
+static int32_t s_right_speed_correction = 0;
 
 /* 左轮速度 PI 参数，真实值后续结合实车调试 */
-#define APP_LEFT_SPEED_KP 1
-#define APP_LEFT_SPEED_KI 1
+#define APP_SPEED_KP 1
+#define APP_SPEED_KI 1
 
-/* 左轮速度 PI 控制器积分限幅，防止积分项累加过大 */
-#define APP_LEFT_SPEED_INTEGRAL_LIMIT 500
+/* 左轮，右轮速度 PI 控制器积分限幅，防止积分项累加过大 */
+#define APP_SPEED_INTEGRAL_LIMIT 500
 
 /*
  * 限幅函数：将占空比限制在 0 到 BSP_MOTOR_DUTY_MAX 之间，防止调速超出约定占空比：0 - BSP_MOTOR_DUTY_MAX
@@ -129,24 +131,41 @@ void App_ShuttleCar_Task(void)
         APP_SPEED_SYNC_KP *
         s_speed_error;
 
-    /* 累计左轮速度误差，作为 PI 控制器积分状态 */
+    /* 累计左轮，右轮速度误差，作为 PI 控制器积分状态 */
     s_left_speed_integral +=
         s_left_speed_error;
 
+    s_right_speed_integral +=
+        s_right_speed_error;
+
     /* 积分限幅，防止积分项累加过大 */
-    if (s_left_speed_integral > APP_LEFT_SPEED_INTEGRAL_LIMIT)
+    if (s_left_speed_integral > APP_SPEED_INTEGRAL_LIMIT)
     {
-        s_left_speed_integral = APP_LEFT_SPEED_INTEGRAL_LIMIT;
+        s_left_speed_integral = APP_SPEED_INTEGRAL_LIMIT;
     }
-    else if (s_left_speed_integral < -APP_LEFT_SPEED_INTEGRAL_LIMIT)
+    else if (s_left_speed_integral < -APP_SPEED_INTEGRAL_LIMIT)
     {
-        s_left_speed_integral = -APP_LEFT_SPEED_INTEGRAL_LIMIT;
+        s_left_speed_integral = -APP_SPEED_INTEGRAL_LIMIT;
     }
 
-    /* 计算左轮速度 PI 控制器输出修正量 */
+    if (s_right_speed_integral > APP_SPEED_INTEGRAL_LIMIT)
+    {
+        s_right_speed_integral = APP_SPEED_INTEGRAL_LIMIT;
+    }
+    else if (s_right_speed_integral < -APP_SPEED_INTEGRAL_LIMIT)
+    {
+        s_right_speed_integral = -APP_SPEED_INTEGRAL_LIMIT;
+    }
+
+
+    /* 计算左轮，右轮速度 PI 控制器输出修正量 */
     s_left_speed_correction =
-        APP_LEFT_SPEED_KP * s_left_speed_error +
-        APP_LEFT_SPEED_KI * s_left_speed_integral;
+        APP_SPEED_KP * s_left_speed_error +
+        APP_SPEED_KI * s_left_speed_integral;
+
+    s_right_speed_correction =
+        APP_SPEED_KP * s_right_speed_error +
+        APP_SPEED_KI * s_right_speed_integral;
 
     /* 设置左右轮电机占空比 */
 
@@ -155,6 +174,12 @@ void App_ShuttleCar_Task(void)
         (int32_t)s_base_duty +
         s_left_speed_correction -
         s_correction;
+
+    right_duty =
+        (int32_t)s_base_duty +
+        s_right_speed_correction +
+        s_correction;
+    
 
     /* 限制左轮占空比在合理范围内 */ 
     left_duty = App_ShuttleCar_ClampDuty(left_duty);
